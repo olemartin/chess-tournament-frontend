@@ -2,8 +2,10 @@
   "name": "webapp",
   "version": "1.0.0",
   "scripts": {
+    "build": "webpack",
+    "lint": "eslint app/",
     "start": "hjs-dev-server",
-    "lint": "eslint app/"
+    "test": "echo \"No tests implemented yet\""
   },
   "license": "MIT",
   "devDependencies": {

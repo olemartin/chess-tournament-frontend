@@ -1,8 +1,8 @@
 const getConfig = require('hjs-webpack');
 
 const config = getConfig({
-    in: 'app/index.js',
-    out: '../resources/assets/bundle.js',
+    in: 'src/index.js',
+    out: 'build',
     clearBeforeBuild: true,
 });
 
