@@ -3,7 +3,7 @@
     "plugins": [
         ["babel-root-import", {
             "rootPathPrefix": "~",
-            "rootPathSuffix": "app"
+            "rootPathSuffix": "src"
         }]
     ]
 }
