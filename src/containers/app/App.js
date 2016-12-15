@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import AppBar from 'material-ui/AppBar';
 
-import SiteHeader from '~/components/site-header/SiteHeader';
+import config from '~/config';
 
 class AppContainer extends Component {
     constructor() {
@@ -11,7 +12,7 @@ class AppContainer extends Component {
     render() {
         return (
             <div>
-                <SiteHeader />
+                <AppBar title={config.siteTitle} />
                 <main>
                     {this.props.children}
                 </main>

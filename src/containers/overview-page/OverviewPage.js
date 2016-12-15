@@ -1,5 +1,7 @@
 import React from 'react';
 
 export default () => (
-    <div>Hello from React!</div>
+    <div>
+        <h1>Hello</h1>
+    </div>
 );
