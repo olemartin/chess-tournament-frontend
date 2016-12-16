@@ -31,6 +31,8 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.16.0",
+    "fetchutils": "^0.0.1",
+    "isomorphic-fetch": "^2.2.1",
     "material-ui": "^0.16.5",
     "normalize.css": "^5.0.0",
     "react": "^15.4.1",

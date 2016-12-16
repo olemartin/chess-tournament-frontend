@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import Dialog from 'material-ui/Dialog';
 import { List, ListItem } from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
+import CircularProgress from 'material-ui/CircularProgress';
 import TextField from 'material-ui/TextField';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import CenteredWrapper from '~/components/centered-wrapper';
+
+import * as dispatchers from '~/dispatchers';
 
 class OverviewPage extends Component {
     constructor() {
@@ -18,6 +21,10 @@ class OverviewPage extends Component {
 
         this.onOpenDialog = this.onOpenDialog.bind(this);
         this.onCreateNewTournament = this.onCreateNewTournament.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.getTournaments();
     }
 
     onOpenDialog() {
@@ -36,6 +43,7 @@ class OverviewPage extends Component {
 
     render() {
         const {
+            loadingTournaments,
             tournaments,
         } = this.props;
 
@@ -53,7 +61,12 @@ class OverviewPage extends Component {
         return (
             <CenteredWrapper>
                 <h1>Registered tournaments</h1>
-                {!tournaments.length &&
+                {loadingTournaments &&
+                    <CenteredWrapper>
+                        <CircularProgress />
+                    </CenteredWrapper>
+                }
+                {!loadingTournaments && !tournaments.length &&
                     <p>No registered tournaments yet</p>
                 }
                 {tournaments.length > 0 &&
@@ -82,6 +95,8 @@ class OverviewPage extends Component {
 }
 
 OverviewPage.propTypes = {
+    getTournaments: PropTypes.func.isRequired,
+    loadingTournaments: PropTypes.bool.isRequired,
     tournaments: PropTypes.arrayOf(
         PropTypes.shape({
             title: PropTypes.string.isRequired,
@@ -90,7 +105,8 @@ OverviewPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
+    loadingTournaments: state.tournaments.metadata.pending,
     tournaments: state.tournaments.tournaments,
 });
 
-export default connect(mapStateToProps)(OverviewPage);
+export default connect(mapStateToProps, dispatchers)(OverviewPage);
