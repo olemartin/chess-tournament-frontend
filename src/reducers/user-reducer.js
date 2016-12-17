@@ -10,8 +10,14 @@ const initialState = {
     name: '',
 };
 
-export function userReducer(state = initialState, action) {
+export default function userReducer(state = initialState, action) {
     switch (action.type) {
+        case actions.LOGIN_DIALOG_TOGGLED: {
+            return {
+                ...state,
+                loginDialogOpen: !state.loginDialogOpen,
+            };
+        }
         case actions.LOGIN_REQUESTED: {
             return {
                 ...state,
