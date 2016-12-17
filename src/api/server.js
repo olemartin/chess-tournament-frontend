@@ -12,6 +12,6 @@ export function addTournament(tournament) {
 
 export function verifyLogin(authString) {
     return get(`${API_ROOT}/user/verify`, {}, {
-        headers: { Authentication: authString },
+        headers: { Authentication: `Basic ${authString}` },
     });
 }

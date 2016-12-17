@@ -57,6 +57,7 @@ class LoginPopup extends Component {
                         floatingLabelText="Password"
                         name="password"
                         onChange={this.onChange}
+                        type="password"
                         value={this.state.password}
                     />
                 </div>
