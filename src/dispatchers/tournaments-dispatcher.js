@@ -9,3 +9,8 @@ export function getTournaments() {
             .then(tournaments => dispatch(actions.tournamentsResponded(tournaments)));
     };
 }
+
+export function addTournament({ name, engine }) {
+    return () => server.addTournament({ name, engine })
+        .then(getTournaments());
+}

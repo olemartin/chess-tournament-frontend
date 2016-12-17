@@ -1,13 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import Dialog from 'material-ui/Dialog';
 import { List, ListItem } from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import TextField from 'material-ui/TextField';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import CenteredWrapper from '~/components/centered-wrapper';
+import NewTournamentPopup from '~/components/new-tournament-popup';
 
 import * as dispatchers from '~/dispatchers';
 
@@ -33,8 +32,8 @@ class OverviewPage extends Component {
         });
     }
 
-    onCreateNewTournament() {
-        // TODO: Create a new tournament
+    onCreateNewTournament(tournament) {
+        this.props.addTournament(tournament);
 
         this.setState({
             newTournamentDialogOpen: false,
@@ -50,13 +49,6 @@ class OverviewPage extends Component {
         const {
             newTournamentDialogOpen,
         } = this.state;
-
-        const dialogActions = [
-            <RaisedButton
-                label="Create"
-                onTouchTap={this.onCreateNewTournament}
-            />,
-        ];
 
         return (
             <CenteredWrapper>
@@ -85,16 +77,17 @@ class OverviewPage extends Component {
                     onTouchTap={this.onOpenDialog}
                     primary
                 />
-                <Dialog open={newTournamentDialogOpen} actions={dialogActions}>
-                    <h2>Create a new tournament!</h2>
-                    <TextField floatingLabelText="Tournament name" />
-                </Dialog>
+                <NewTournamentPopup
+                    open={newTournamentDialogOpen}
+                    onSave={this.onCreateNewTournament}
+                />
             </CenteredWrapper>
         );
     }
 }
 
 OverviewPage.propTypes = {
+    addTournament: PropTypes.func.isRequired,
     getTournaments: PropTypes.func.isRequired,
     loadingTournaments: PropTypes.bool.isRequired,
     tournaments: PropTypes.arrayOf(
