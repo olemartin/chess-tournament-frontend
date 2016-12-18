@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import Snackbar from 'material-ui/Snackbar';
 
 import LoginPopup from '~/components/login-popup';
 
@@ -36,9 +37,11 @@ class AppContainer extends Component {
     render() {
         const {
             children,
+            closeSnackbar,
             loggedIn,
             loginDialogOpen,
             siteDrawerOpen,
+            snackbar,
             toggleLoginDialog,
             toggleSiteDrawer,
         } = this.props;
@@ -73,6 +76,12 @@ class AppContainer extends Component {
                     onLogin={this.onLoginRequest}
                     open={loginDialogOpen}
                 />
+                <Snackbar
+                    open={snackbar.open}
+                    message={snackbar.message}
+                    autoHideDuration={4000}
+                    onRequestClose={closeSnackbar}
+                />
             </div>
         );
     }
@@ -80,10 +89,15 @@ class AppContainer extends Component {
 
 AppContainer.propTypes = {
     children: PropTypes.node.isRequired,
+    closeSnackbar: PropTypes.func.isRequired,
     loggedIn: PropTypes.bool.isRequired,
     loginDialogOpen: PropTypes.bool.isRequired,
     logout: PropTypes.func.isRequired,
     siteDrawerOpen: PropTypes.bool.isRequired,
+    snackbar: PropTypes.shape({
+        message: PropTypes.string,
+        open: PropTypes.bool,
+    }).isRequired,
     toggleLoginDialog: PropTypes.func.isRequired,
     toggleSiteDrawer: PropTypes.func.isRequired,
     verifyLoginDetails: PropTypes.func.isRequired,
@@ -93,6 +107,10 @@ const mapStateToProps = state => ({
     loggedIn: state.user.loggedIn,
     loginDialogOpen: state.user.metadata.loginDialogOpen,
     siteDrawerOpen: state.site.drawerOpen,
+    snackbar: {
+        open: state.site.snackbarOpen,
+        message: state.site.snackbarMessage,
+    },
 });
 
 export default connect(mapStateToProps, dispatchers)(AppContainer);

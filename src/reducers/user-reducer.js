@@ -25,7 +25,10 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 authString: action.authString,
-                metadata: { ...state.metadata, pending: true },
+                metadata: {
+                    ...state.metadata,
+                    pending: true,
+                },
             };
         }
         case actions.LOGIN_SUCCEEDED: {
@@ -40,7 +43,10 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 loggedIn: false,
-                metadata: { ...state.metadata, pending: false },
+                metadata: {
+                    ...state.metadata,
+                    pending: false,
+                },
                 name: '',
             };
         }

@@ -2,6 +2,8 @@ import * as actions from '~/actions';
 
 const initialState = {
     drawerOpen: false,
+    snackbarOpen: false,
+    snackbarMessage: '',
 };
 
 export default function siteReducer(state = initialState, action) {
@@ -10,6 +12,20 @@ export default function siteReducer(state = initialState, action) {
             return {
                 ...state,
                 drawerOpen: !state.drawerOpen,
+            };
+        }
+        case actions.SHOW_SNACKBAR_MESSAGE: {
+            return {
+                ...state,
+                snackbarOpen: true,
+                snackbarMessage: action.message,
+            };
+        }
+        case actions.CLOSE_SNACKBAR: {
+            return {
+                ...state,
+                snackbarOpen: false,
+                snackbarMessage: '',
             };
         }
         default: {

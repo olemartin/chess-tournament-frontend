@@ -11,12 +11,21 @@ export function verifyLoginDetails(username, password) {
         dispatch(actions.loginRequested(authString));
 
         server.verifyLogin(authString)
-            .then(user => dispatch(actions.loginSucceeded(user)))
-            .then(() => dispatch(actions.loginDialogToggled()))
-            .catch(() => dispatch(actions.loginFailed()));
+            .then((user) => {
+                dispatch(actions.loginSucceeded(user));
+                dispatch(actions.loginDialogToggled());
+                dispatch(actions.showSnackbarMessage('Logged in!'));
+            })
+            .catch(() => {
+                dispatch(actions.loginFailed());
+                dispatch(actions.showSnackbarMessage('Nope!'));
+            });
     };
 }
 
 export function logout() {
-    return dispatch => dispatch(actions.logout());
+    return (dispatch) => {
+        dispatch(actions.logout());
+        dispatch(actions.showSnackbarMessage('Logged out.'));
+    };
 }
