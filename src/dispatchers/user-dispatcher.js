@@ -12,6 +12,11 @@ export function verifyLoginDetails(username, password) {
 
         server.verifyLogin(authString)
             .then(user => dispatch(actions.loginSucceeded(user)))
+            .then(() => dispatch(actions.loginDialogToggled()))
             .catch(() => dispatch(actions.loginFailed()));
     };
+}
+
+export function logout() {
+    return dispatch => dispatch(actions.logout());
 }

@@ -14,6 +14,7 @@ class AppContainer extends Component {
         super();
 
         this.onLoginRequest = this.onLoginRequest.bind(this);
+        this.onLogout = this.onLogout.bind(this);
         this.onToggleLoginDialog = this.onToggleLoginDialog.bind(this);
     }
 
@@ -27,13 +28,19 @@ class AppContainer extends Component {
         this.props.toggleLoginDialog();
     }
 
+    onLogout() {
+        this.props.toggleSiteDrawer();
+        this.props.logout();
+    }
+
     render() {
         const {
+            children,
+            loggedIn,
+            loginDialogOpen,
             siteDrawerOpen,
             toggleLoginDialog,
             toggleSiteDrawer,
-            children,
-            loginDialogOpen,
         } = this.props;
 
         return (
@@ -47,8 +54,16 @@ class AppContainer extends Component {
                     open={siteDrawerOpen}
                     docked={false}
                 >
-                    <h2>Menu</h2>
-                    <MenuItem onTouchTap={this.onToggleLoginDialog}>Log in</MenuItem>
+                    {!loggedIn &&
+                        <MenuItem onTouchTap={this.onToggleLoginDialog}>
+                            Log in
+                        </MenuItem>
+                    }
+                    {loggedIn &&
+                        <MenuItem onTouchTap={this.onLogout}>
+                            Log out
+                        </MenuItem>
+                    }
                 </Drawer>
                 <main>
                     {children}
@@ -65,7 +80,9 @@ class AppContainer extends Component {
 
 AppContainer.propTypes = {
     children: PropTypes.node.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
     loginDialogOpen: PropTypes.bool.isRequired,
+    logout: PropTypes.func.isRequired,
     siteDrawerOpen: PropTypes.bool.isRequired,
     toggleLoginDialog: PropTypes.func.isRequired,
     toggleSiteDrawer: PropTypes.func.isRequired,
@@ -73,7 +90,8 @@ AppContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    loginDialogOpen: state.user.loginDialogOpen,
+    loggedIn: state.user.loggedIn,
+    loginDialogOpen: state.user.metadata.loginDialogOpen,
     siteDrawerOpen: state.site.drawerOpen,
 });
 
