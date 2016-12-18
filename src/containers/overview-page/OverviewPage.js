@@ -7,6 +7,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import CenteredWrapper from '~/components/centered-wrapper';
 import NewTournamentPopup from '~/components/new-tournament-popup';
+import IconButton from 'material-ui/IconButton';
 
 import * as dispatchers from '~/dispatchers';
 
@@ -26,17 +27,22 @@ class OverviewPage extends Component {
         this.props.getTournaments();
     }
 
-    onToggleDialog() {
-        this.setState({
-            newTournamentDialogOpen: !this.state.newTournamentDialogOpen,
-        });
-    }
 
     onCreateNewTournament(tournament) {
         this.props.addTournament(tournament);
 
         this.setState({
             newTournamentDialogOpen: false,
+        });
+    }
+
+    onDeleteTournament(tournament) {
+        this.props.deleteTournament(tournament);
+    }
+
+    onToggleDialog() {
+        this.setState({
+            newTournamentDialogOpen: !this.state.newTournamentDialogOpen,
         });
     }
 
@@ -50,6 +56,12 @@ class OverviewPage extends Component {
         const {
             newTournamentDialogOpen,
         } = this.state;
+
+        const getRightIconButton = tournament => (
+            <IconButton onTouchTap={() => this.onDeleteTournament(tournament)}>
+                <DeleteIcon />
+            </IconButton>
+        );
 
         return (
             <CenteredWrapper>
@@ -68,7 +80,10 @@ class OverviewPage extends Component {
                             <ListItem
                                 key={index}
                                 primaryText={tournament.name}
-                                rightIcon={<DeleteIcon />}
+                                rightIconButton={
+                                    loggedIn ?
+                                        getRightIconButton(tournament) : null
+                                    }
                             />,
                         )}
                     </List>
@@ -94,6 +109,7 @@ class OverviewPage extends Component {
 
 OverviewPage.propTypes = {
     addTournament: PropTypes.func.isRequired,
+    deleteTournament: PropTypes.func.isRequired,
     getTournaments: PropTypes.func.isRequired,
     loadingTournaments: PropTypes.bool.isRequired,
     loggedIn: PropTypes.bool.isRequired,

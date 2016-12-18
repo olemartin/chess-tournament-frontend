@@ -22,3 +22,16 @@ export function addTournament({ name, engine }) {
             });
     };
 }
+
+export function deleteTournament({ id }) {
+    return (dispatch, getState) => {
+        const { authString } = getState().user;
+        server.deleteTournament({ authString, id })
+            .then(() => {
+                dispatch(actions.showSnackbarMessage(
+                    'Tournament was removed successfully',
+                ));
+                getTournaments()(dispatch);
+            });
+    };
+}
