@@ -18,7 +18,7 @@ class OverviewPage extends Component {
             newTournamentDialogOpen: false,
         };
 
-        this.onOpenDialog = this.onOpenDialog.bind(this);
+        this.onToggleDialog = this.onToggleDialog.bind(this);
         this.onCreateNewTournament = this.onCreateNewTournament.bind(this);
     }
 
@@ -26,9 +26,9 @@ class OverviewPage extends Component {
         this.props.getTournaments();
     }
 
-    onOpenDialog() {
+    onToggleDialog() {
         this.setState({
-            newTournamentDialogOpen: true,
+            newTournamentDialogOpen: !this.state.newTournamentDialogOpen,
         });
     }
 
@@ -74,12 +74,13 @@ class OverviewPage extends Component {
                 }
                 <RaisedButton
                     label="New tournament"
-                    onTouchTap={this.onOpenDialog}
+                    onTouchTap={this.onToggleDialog}
                     primary
                 />
                 <NewTournamentPopup
                     open={newTournamentDialogOpen}
                     onSave={this.onCreateNewTournament}
+                    onClose={this.onToggleDialog}
                 />
             </CenteredWrapper>
         );

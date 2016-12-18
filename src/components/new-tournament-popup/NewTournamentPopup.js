@@ -33,6 +33,7 @@ class NewTournamentPopup extends Component {
 
     render() {
         const {
+            onClose,
             open,
         } = this.props;
 
@@ -49,7 +50,11 @@ class NewTournamentPopup extends Component {
         ];
 
         return (
-            <Dialog open={open} actions={dialogActions}>
+            <Dialog
+                actions={dialogActions}
+                onRequestClose={onClose}
+                open={open}
+            >
                 <h2>Create a new tournament!</h2>
                 <TextField
                     floatingLabelText="Tournament name"
@@ -70,8 +75,9 @@ class NewTournamentPopup extends Component {
 }
 
 NewTournamentPopup.propTypes = {
-    open: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
 };
 
 export default NewTournamentPopup;
