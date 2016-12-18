@@ -1,6 +1,6 @@
 import { get, post, del } from 'fetchutils';
 
-const API_ROOT = 'http://localhost:9000/rest';
+const API_ROOT = 'http://localhost:9000/rest'; // TODO: Make environment specific
 
 const withAuthHeaders = authString => ({
     headers: { Authorization: `Basic ${authString}` },
@@ -16,6 +16,10 @@ export function addTournament({ authString, tournament }) {
         tournament,
         withAuthHeaders(authString),
     );
+}
+
+export function getPlayersForTournament(id) {
+    return get(`${API_ROOT}/tournament/${id}/players`);
 }
 
 export function deleteTournament({ authString, id }) {

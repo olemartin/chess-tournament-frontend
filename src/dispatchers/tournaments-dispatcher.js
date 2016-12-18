@@ -35,3 +35,17 @@ export function deleteTournament({ id }) {
             });
     };
 }
+
+export function getPlayersForTournament(id) {
+    return (dispatch) => {
+        actions.playersForTournamentRequested();
+
+        server.getPlayersForTournament(id)
+            .then(players =>
+                dispatch(actions.playersForTournamentReceived({
+                    tournamentId: id,
+                    players,
+                })),
+            );
+    };
+}

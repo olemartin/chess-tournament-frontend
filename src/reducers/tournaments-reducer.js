@@ -5,6 +5,7 @@ const initialState = {
         pending: false,
     },
     tournaments: [],
+    playersById: {},
 };
 
 export default function tournamentsReducer(state = initialState, action) {
@@ -20,6 +21,15 @@ export default function tournamentsReducer(state = initialState, action) {
                 ...state,
                 metadata: { pending: false },
                 tournaments: action.tournaments,
+            };
+        }
+        case actions.PLAYERS_FOR_TOURNAMENT_RECEIVED: {
+            return {
+                ...state,
+                playersById: {
+                    ...state.playersById,
+                    [action.tournamentId]: action.players,
+                },
             };
         }
         default: {
