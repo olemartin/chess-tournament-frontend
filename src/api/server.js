@@ -6,8 +6,10 @@ export function getTournaments() {
     return get(`${API_ROOT}/tournament`);
 }
 
-export function addTournament(tournament) {
-    return post(`${API_ROOT}/tournament/new`, tournament);
+export function addTournament({ authString, tournament }) {
+    return post(`${API_ROOT}/tournament/new`, tournament, {
+        headers: { Authorization: `Basic ${authString}` },
+    });
 }
 
 export function verifyLogin(authString) {

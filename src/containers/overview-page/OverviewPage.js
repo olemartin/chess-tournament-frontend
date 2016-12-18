@@ -43,6 +43,7 @@ class OverviewPage extends Component {
     render() {
         const {
             loadingTournaments,
+            loggedIn,
             tournaments,
         } = this.props;
 
@@ -66,22 +67,26 @@ class OverviewPage extends Component {
                         {tournaments.map((tournament, index) =>
                             <ListItem
                                 key={index}
-                                primaryText={tournament.title}
+                                primaryText={tournament.name}
                                 rightIcon={<DeleteIcon />}
                             />,
                         )}
                     </List>
                 }
-                <RaisedButton
-                    label="New tournament"
-                    onTouchTap={this.onToggleDialog}
-                    primary
-                />
-                <NewTournamentPopup
-                    open={newTournamentDialogOpen}
-                    onSave={this.onCreateNewTournament}
-                    onClose={this.onToggleDialog}
-                />
+                {loggedIn &&
+                    <div>
+                        <RaisedButton
+                            label="New tournament"
+                            onTouchTap={this.onToggleDialog}
+                            primary
+                        />
+                        <NewTournamentPopup
+                            open={newTournamentDialogOpen}
+                            onSave={this.onCreateNewTournament}
+                            onClose={this.onToggleDialog}
+                        />
+                    </div>
+                }
             </CenteredWrapper>
         );
     }
@@ -91,15 +96,17 @@ OverviewPage.propTypes = {
     addTournament: PropTypes.func.isRequired,
     getTournaments: PropTypes.func.isRequired,
     loadingTournaments: PropTypes.bool.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
     tournaments: PropTypes.arrayOf(
         PropTypes.shape({
-            title: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
         }),
     ),
 };
 
 const mapStateToProps = state => ({
     loadingTournaments: state.tournaments.metadata.pending,
+    loggedIn: state.user.loggedIn,
     tournaments: state.tournaments.tournaments,
 });
 

@@ -11,6 +11,14 @@ export function getTournaments() {
 }
 
 export function addTournament({ name, engine }) {
-    return () => server.addTournament({ name, engine })
-        .then(getTournaments());
+    return (dispatch, getState) => {
+        const { authString } = getState().user;
+        server.addTournament({ tournament: { name, engine }, authString })
+            .then(() => {
+                dispatch(actions.showSnackbarMessage(
+                    `Great! "${name}" was created successfully.`,
+                ));
+                getTournaments()(dispatch);
+            });
+    };
 }
