@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
+import './ContentContainer.less';
+
 function ContentContainer(props) {
     const {
         children,
